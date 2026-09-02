@@ -24,12 +24,12 @@ An end-to-end Machine Learning system that predicts customer churn on the **Telc
 
 ## Model Performance & Comparison
 
-| Model Architecture | Accuracy | Churn Recall (Caught) | Missed Churners (FN) | False Alarms (FP) | Churn Precision |
-|---|---|---|---|---|---|
-| Baseline Random Forest (Default) | 80% | 47% (176 / 373) | 197 | **86** | **67%** |
-| Default Weighted XGBoost | 77% | 69% (259 / 373) | 114 | 207 | 56% |
-| Tuned XGBoost (`best_xgb`) | 75% | 82% (306 / 373) | 67 | 280 | 52% |
-| **Tuned Random Forest (`best_rfc`)** ⭐ | **76%** | **86% (319 / 373)** | **54** | **284** | **53%** |
+| Model Architecture | Accuracy | Churn Recall (Caught) | Missed Churners (FN) |
+|---|---|---|---|
+| Baseline Random Forest (Default) | 80% | 47% (176 / 373) | 197 |
+| Default Weighted XGBoost | 77% | 69% (259 / 373) | 114 |
+| Tuned XGBoost (`best_xgb`) | 75% | 82% (306 / 373) | 67 |
+| **Tuned Random Forest (`best_rfc`)** ⭐ | **76%** | **86% (319 / 373)** | **54** |
 
 > **Selected Production Model:** **Tuned Random Forest (`best_rfc`)**. It identifies **85.5% of all churning customers** on an untouched test set, reducing missed churners from 197 down to just 54.
 
