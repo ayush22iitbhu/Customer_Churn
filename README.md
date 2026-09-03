@@ -1,36 +1,54 @@
-# Telecom Customer Churn Prediction Analytics
+# Telecom Customer Churn Prediction & Retention Engine
 
-An end-to-end Machine Learning system that predicts customer churn on the **Telco Customer Churn** dataset (7,043 records). Built using Scikit-Learn and XGBoost, this project optimizes for **minority class recall** and **ROC-AUC** to identify high-risk churners and mitigate recurring revenue loss.
-
----
-
-## Business Objective
-
-* **The Problem:** Acquiring a new telecom subscriber costs 5–7x more than retaining an existing one. Unmonitored customer churn directly damages Monthly Recurring Revenue (MRR).
-* **The Challenge:** Target class imbalance (~73.4% loyal customers vs. ~26.6% churners). Default accuracy-optimized models achieve superficially high accuracy by simply guessing the majority class, missing most churners.
-* **The Goal:** Maximize **Recall** (catching churners) and **ROC-AUC** rather than raw accuracy, drastically minimizing False Negatives (undetected churners).
+An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records). Built with Scikit-Learn and XGBoost, this system shifts the optimization objective from standard accuracy to **minority class recall** and **ROC-AUC**, reducing undetected churners by **72.6%**.
 
 ---
 
-## Tech Stack & Workflow
+## Business Problem & Impact
 
-* **Libraries:** Python, Pandas, NumPy, Scikit-Learn, XGBoost, Matplotlib, Seaborn
-* **Data Processing & Integrity:** Handled blank string records in `TotalCharges`, cast columns to proper numeric dtypes, and preserved categorical mappings using persisted `LabelEncoder` objects.
-* **Validation Strategy:** 5-fold `StratifiedKFold` cross-validation to maintain identical class ratios across every evaluation split.
-* **Imbalance Handling:** Algorithmic cost-sensitive reweighting via `class_weight='balanced'` (Random Forest) and `scale_pos_weight=2.78` (XGBoost).
-* **Hyperparameter Optimization:** `RandomizedSearchCV` scored against **ROC-AUC** to balance ensemble depth, leaf splits, and learning rates.
+* **High Acquisition Costs:** In the telecommunications sector, acquiring a new subscriber costs 5–7x more than retaining an existing one.
+* **The Imbalance Trap:** The dataset exhibits a 73.4% to 26.6% class imbalance. A naive model predicting "No Churn" for every customer scores ~73% accuracy while capturing 0% of churners.
+* **Objective:** Prioritize **Recall (Class 1)** and **ROC-AUC** to catch churners before they exit, accepting a calculated trade-off in false alarms to protect recurring revenue.
 
 ---
 
-## Model Performance & Comparison
+## 🛠️ Architecture & Tech Stack
 
-| Model Architecture | Accuracy | Churn Recall (Caught) | Missed Churners (FN) |
-|---|---|---|---|
-| Baseline Random Forest (Default) | 80% | 47% (176 / 373) | 197 |
-| Default Weighted XGBoost | 77% | 69% (259 / 373) | 114 |
-| Tuned XGBoost (`best_xgb`) | 75% | 82% (306 / 373) | 67 |
-| **Tuned Random Forest (`best_rfc`)** ⭐ | **76%** | **86% (319 / 373)** | **54** |
-
-> **Selected Production Model:** **Tuned Random Forest (`best_rfc`)**. It identifies **85.5% of all churning customers** on an untouched test set, reducing missed churners from 197 down to just 54.
+* **Core Stack:** Python, Pandas, NumPy, Scikit-Learn, XGBoost, Matplotlib, Seaborn
+* **Data Cleaning & Pipeline:**
+  * Resolved empty whitespace strings (`" "`) in `TotalCharges` and cast to float.
+  * Encoded categorical attributes using `LabelEncoder` and persisted mappings via `encoders.pkl` to prevent inference drift.
+* **Cross-Validation:** 5-fold `StratifiedKFold` ensuring consistent ~73:27 class distribution across all evaluation folds.
+* **Cost-Sensitive Learning:**
+  * Random Forest: `class_weight='balanced'`
+  * XGBoost: `scale_pos_weight=2.78` (ratio of negative to positive instances)
+* **Hyperparameter Tuning:** 15-iteration `RandomizedSearchCV` scored directly on `roc_auc`.
 
 ---
+
+## Model Benchmark & Evaluation
+
+All evaluations were executed on an untouched 20% holdout test set ($N = 1,409$).
+
+### Comparative Performance
+
+| Model Configuration | Churn Recall | Churn Precision | Missed Churners (FN) | False Alarms (FP) | ROC-AUC |
+|---|---|---|---|---|---|
+| **Baseline Random Forest** | 47.2% | **67.2%** | 197 | **86** | 0.8240 |
+| **Tuned XGBoost (`best_xgb`)** | 82.0% | 52.0% | 67 | 280 | **0.8597** |
+| **Tuned Random Forest (`best_rfc`)** ⭐| **85.5%** | 52.9% | **54** | 284 | 0.8552 |
+
+---
+
+### Selected Model: Tuned Random Forest (`best_rfc`)
+
+```text
+Confusion Matrix (Test Set: 1,409 samples):
+               Predicted: Stay    Predicted: Churn
+Actual: Stay        752 (TN)            284 (FP)
+Actual: Churn        54 (FN)            319 (TP)
+
+Classification Report:
+              precision    recall  f1-score   support
+           0       0.93      0.73      0.82      1036
+           1       0.53      0.86      0.65       373
