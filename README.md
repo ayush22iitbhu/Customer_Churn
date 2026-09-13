@@ -4,12 +4,6 @@ An end-to-end Machine Learning pipeline that identifies at-risk subscribers usin
 
 ---
 
-## Business Problem & Impact
-
-* **High Acquisition Costs:** In the telecommunications sector, acquiring a new subscriber costs 5–7x more than retaining an existing one.
-* **The Imbalance Trap:** The dataset exhibits a 73.4% to 26.6% class imbalance. A naive model predicting "No Churn" for every customer scores ~73% accuracy while capturing 0% of churners.
-* **Objective:** Prioritize **Recall (Class 1)** and **ROC-AUC** to catch churners before they exit, accepting a calculated trade-off in false alarms to protect recurring revenue.
-
 ---
 
 ## Architecture & Tech Stack
