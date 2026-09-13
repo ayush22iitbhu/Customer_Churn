@@ -1,6 +1,6 @@
 # Telecom Customer Churn Prediction
 
-An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records). Built with Scikit-Learn and XGBoost, this system shifts the optimization objective from standard accuracy to **minority class recall** and **ROC-AUC**, reducing undetected churners by **72.6%**.
+An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records). Built with Scikit-Learn and XGBoost, this system focuses on minority recall instead of standard accuracy.
 
 ---
 
@@ -27,8 +27,8 @@ All evaluations were executed on an untouched 20% holdout test set ($N = 1,409$)
 | Model Configuration | Churn Recall | Churn Precision | Missed Churners (FN) | False Alarms (FP) | ROC-AUC |
 |---|---|---|---|---|---|
 | **Baseline Random Forest** | 0.47 | 0.67 | 197 | 86 | 0.8364 |
-| **Tuned XGBoost (`best_xgb`)** | 0.82 | 0.52 | 67 | 280 | 0.8597 |
-| **Tuned Random Forest (`best_rfc`)** ⭐| 0.86 | 0.52 | 54 | 284 | 0.8626 |
+| **Tuned XGBoost (`best_xgb`)** | 0.82 | 0.52 | 68 | 279 | 0.8597 |
+| **Tuned Random Forest (`best_rfc`)** ⭐| 0.86 | 0.53 | 54 | 284 | 0.8626 |
 
 ---
 
@@ -44,5 +44,4 @@ Classification Report:
                precision    recall  f1-score   support
 
            0       0.93      0.73      0.82      1036
-           1       0.53      0.86      0.65       373
            1       0.53      0.86      0.65       373
