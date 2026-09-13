@@ -1,6 +1,7 @@
 # Telecom Customer Churn Prediction & Retention Engine
 
 An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records). Built with Scikit-Learn and XGBoost, this system shifts the optimization objective from standard accuracy to **minority class recall** and **ROC-AUC**, reducing undetected churners by **72.6%**.
+
 ---
 
 ## Architecture & Tech Stack
