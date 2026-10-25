@@ -1,6 +1,8 @@
 # Telecom Customer Churn Prediction
 
-An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records). Built with Scikit-Learn and XGBoost, this system focuses on minority recall instead of standard accuracy.
+An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records).
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/13HCn9lB9RALsojUOMEQpXJT7TkhBPMPl)
 
 ---
 
