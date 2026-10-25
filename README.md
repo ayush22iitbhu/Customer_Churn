@@ -1,10 +1,8 @@
 # Telecom Customer Churn Prediction
 
 An end-to-end Machine Learning pipeline that identifies at-risk subscribers using the **Telco Customer Churn** dataset (7,043 customer records).
+[Google Colab](https://colab.research.google.com/drive/13HCn9lB9RALsojUOMEQpXJT7TkhBPMPl)
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/13HCn9lB9RALsojUOMEQpXJT7TkhBPMPl)
-
----
 
 ## Architecture & Tech Stack
 
@@ -18,7 +16,6 @@ An end-to-end Machine Learning pipeline that identifies at-risk subscribers usin
   * XGBoost: `scale_pos_weight=2.78` (ratio of negative to positive instances)
 * **Hyperparameter Tuning:** 15-iteration `RandomizedSearchCV` scored directly on `roc_auc`.
 
----
 
 ## Model Benchmark & Evaluation
 
@@ -31,8 +28,6 @@ All evaluations were executed on an untouched 20% holdout test set ($N = 1,409$)
 | **Baseline Random Forest** | 0.47 | 0.67 | 197 | 86 | 0.8364 |
 | **Tuned XGBoost (`best_xgb`)** | 0.82 | 0.52 | 68 | 279 | 0.8597 |
 | **Tuned Random Forest (`best_rfc`)** ⭐| 0.86 | 0.53 | 54 | 284 | 0.8626 |
-
----
 
 ### Selected Model: Tuned Random Forest (`best_rfc`)
 
